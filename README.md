@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+=======
+# pandas-Academy_of_Py
+ Analysis of district-wide standardized test results and trends in school performance.
+>>>>>>> 7e4527b903a9a8b264d6c8b100400b9fb7e1bf78
 
 
 ```python
