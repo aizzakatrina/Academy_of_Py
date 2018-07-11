@@ -1,19 +1,26 @@
-# Academy_of_Py
- Analysis of district-wide standardized test results and trends in school performance.
+# District Academic Performance Analysis
+ * There is a negative correlation between the per student budget and the percentage of students with passing scores. The top five performing schools have a lower per student budget than the bottom five based on the overall passing rate. The inverse relationship is displayed further when the overall passing rates are grouped by spending ranges based on per student budget. 
+
+ * The larger schools with more than 3,500 students have a signifcantly lower overall passing rate than smaller schools by about twenty percent. The schools with less students appear to be perform exceptionally well with overall passing rates above ninety percent.
+
+ * When schools are grouped by type, disctrict schools have a significantly lower overall passing rate than charter schools. The top five performaing schools are all charter schools, while the bottom five are all are district schools. Furthermore, on average, charter schools have less students than district schools.
+
+
+
+# Source Code
 
 
 ```python
 # Dependencies 
 import pandas as pd
-import numpy as np
 import os
 ```
 
 
 ```python
 # load csv
-file_path_school = os.path.join('schools_complete.csv')
-file_path_student = os.path.join('students_complete.csv')
+file_path_school = os.path.join('data','schools_complete.csv')
+file_path_student = os.path.join('data','students_complete.csv')
 ```
 
 
@@ -192,12 +199,10 @@ df_student.head()
 
 
 
+## District Summary
+
 
 ```python
-#########################
-### District Summary ###
-########################
-
 # Calculate Total Schools
 total_schools = len(df_school['School ID'])
 
@@ -222,7 +227,7 @@ passing_reading_df = df_student.loc[df_student['reading_score']>70]
 passing_reading = len(passing_reading_df) / len(df_student['reading_score']) * 100
 
 # Calculate Overall Passing Rate (Average of the above two)
-overall_passing_rate = (passing_math + passing_reading)/2
+overall_passing_rate = (average_math + average_reading)/2
 
 # Summary of district's key metrics
 district_summary = pd.DataFrame({'Total Schools': total_schools,
@@ -289,7 +294,7 @@ district_summary_sorted
       <td>81.87784</td>
       <td>72.392137</td>
       <td>82.971662</td>
-      <td>77.681899</td>
+      <td>80.431606</td>
     </tr>
   </tbody>
 </table>
@@ -297,12 +302,10 @@ district_summary_sorted
 
 
 
+## School Summary
+
 
 ```python
-#######################
-### School Summary ###
-#######################
-
 # Use columns from df_school and rename columns
 school_data = df_school[['name', 'type','budget']]
 school_data_renamed = school_data.rename(columns={'name':'School Name', 'type':'School Type','budget':'Total School Budget'})
@@ -582,12 +585,10 @@ school_summary_sorted_column
 
 
 
+## Top Performing Schools (By Overall Passing Rate)
+
 
 ```python
-##############################
-### Top Performing Schools ###
-##############################
-
 # sort school summary by overall passing rate
 top_passing_rate_df = school_summary_sorted_column.sort_values('% Overall Passing Rate', ascending=False)
 
@@ -695,12 +696,10 @@ top_performing
 
 
 
+## Bottom Performing Schools
+
 
 ```python
-#################################
-### Bottom Performing Schools ### 
-#################################
-
 # sort school summary by overall passing rate
 bottom_passing_rate_df = school_summary_sorted_column.sort_values('% Overall Passing Rate')
 
@@ -808,12 +807,10 @@ bottom_performing
 
 
 
+## Math Scores by Grade
+
 
 ```python
-############################
-### Math Scores by Grade ###
-############################
-
 # group by school and grade
 grouped_grade = df_student.groupby(['school','grade'])
 
@@ -972,12 +969,10 @@ math_by_grade_sortedcol
 
 
 
+## Reading Scores by Grade
+
 
 ```python
-###############################
-### Reading Scores by Grade ###
-###############################
-
 # create data frame with averages
 avg_reading_bygrade = pd.DataFrame(grouped_grade['reading_score'].mean())
 
@@ -1133,12 +1128,10 @@ reading_by_grade_sortedcol
 
 
 
+## Scores by School Spending
+
 
 ```python
-#################################
-### Scores by School Spending ###
-#################################
-
 # extract columns from school summary data frame
 col_spend = [2,6,7,4,5,3]
 by_spending = school_summary_merged.iloc[:,col_spend]
@@ -1157,7 +1150,7 @@ grouped_spending_summary =  grouped_spending_df.iloc[:,col_spend2]
 grouped_spending_summary
 ```
 
-    C:\Users\Katrina\Anaconda3\envs\PythonData\lib\site-packages\ipykernel\__main__.py:13: SettingWithCopyWarning: 
+    C:\Users\Katrina\Anaconda3\envs\PythonData\lib\site-packages\ipykernel\__main__.py:9: SettingWithCopyWarning: 
     A value is trying to be set on a copy of a slice from a DataFrame.
     Try using .loc[row_indexer,col_indexer] = value instead
     
@@ -1239,12 +1232,10 @@ grouped_spending_summary
 
 
 
+##  Scores by School Size
+
 
 ```python
-#############################
-### Scores by School Size ###
-#############################
-
 # extract columns from school summary data frame
 col_size = [8,6,7,4,5,3]
 by_size = school_summary_merged.iloc[:,col_size]
@@ -1263,7 +1254,7 @@ grouped_size_summary =  grouped_size_df.iloc[:,col_size2]
 grouped_size_summary
 ```
 
-    C:\Users\Katrina\Anaconda3\envs\PythonData\lib\site-packages\ipykernel\__main__.py:13: SettingWithCopyWarning: 
+    C:\Users\Katrina\Anaconda3\envs\PythonData\lib\site-packages\ipykernel\__main__.py:9: SettingWithCopyWarning: 
     A value is trying to be set on a copy of a slice from a DataFrame.
     Try using .loc[row_indexer,col_indexer] = value instead
     
@@ -1337,12 +1328,10 @@ grouped_size_summary
 
 
 
+## Scores by School Type
+
 
 ```python
-#############################
-### Scores by School Type ###
-#############################
-
 # extract columns from school summary data frame
 col_type = [0,6,7,4,5,3]
 by_type = school_summary_merged.iloc[:,col_type]
@@ -1407,5 +1396,6 @@ grouped_type.max().head()
   </tbody>
 </table>
 </div>
+
 
 
