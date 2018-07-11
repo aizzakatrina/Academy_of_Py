@@ -1,4 +1,4 @@
-# District Academic Performance Analysis
+# District Performance Analysis
  * There is a negative correlation between the per student budget and the percentage of students with passing scores. The top five performing schools have a lower per student budget than the bottom five based on the overall passing rate. The inverse relationship is displayed further when the overall passing rates are grouped by spending ranges based on per student budget. 
 
  * The larger schools with more than 3,500 students have a signifcantly lower overall passing rate than smaller schools by about twenty percent. The schools with less students appear to be perform exceptionally well with overall passing rates above ninety percent.
